@@ -9,7 +9,25 @@ const name = 'Taekwan Kim'
 export const siteTitle = 'Next.js Sample Website'
 
 export default function Layout({ children, home }) {
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useState(() =>
+    typeof window !== 'undefined'
+      ? localStorage.getItem('theme') === 'dark'
+        ? 'dark'
+        : 'light'
+      : 'light',
+  )
+
+  const handleClick = () => {
+    const theme = localStorage.getItem('theme')
+    if (theme === 'dark') {
+      localStorage.setItem('theme', 'light')
+      setTheme('light')
+    } else {
+      localStorage.setItem('theme', 'dark')
+      setTheme('dark')
+    }
+  }
+
   return (
     <div className="bg-pink-50 dark:bg-black text-gray-800 dark:text-gray-200 h-screen">
       <div className={styles.container}>
@@ -28,7 +46,7 @@ export default function Layout({ children, home }) {
           <meta name="og:title" content={siteTitle} />
           <meta name="twitter:card" content="summary_large_image" />
         </Head>
-        <button className="w-12 px-2">
+        <button className="w-12 px-2" onClick={handleClick}>
           {theme === 'dark' ? (
             <img src="/light-mode.svg" alt="light" />
           ) : (
