@@ -50,7 +50,7 @@ const Post = ({ postData }) => {
   if (router.isFallback) {
     return <div>Loading!!!</div>
   }
-  console.log('postData.mdxSource : ', postData.mdxSource)
+  // console.log('postData.mdxSource : ', postData.mdxSource)
   return (
     <Layout>
       <article>
