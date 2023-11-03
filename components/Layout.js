@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const name = 'Taekwan Kim'
 export const siteTitle = 'Next.js Sample Website'
@@ -17,6 +17,14 @@ export default function Layout({ children, home }) {
       : 'light',
   )
 
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.querySelector('body').classList.add('dark')
+    } else {
+      document.querySelector('body').classList.remove('dark')
+    }
+  }, [theme])
+
   const handleClick = () => {
     const theme = localStorage.getItem('theme')
     if (theme === 'dark') {
@@ -29,7 +37,7 @@ export default function Layout({ children, home }) {
   }
 
   return (
-    <div className="bg-pink-50 dark:bg-black text-gray-800 dark:text-gray-200 h-screen">
+    <div className="bg-pink-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 h-screen">
       <div className={styles.container}>
         <Head>
           <link rel="icon" href="/favicon.ico" />
