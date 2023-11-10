@@ -4,6 +4,7 @@ import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
 import Date from '../components/Date'
+import getConfig from 'next/config'
 
 export const getServerSideProps = async (ctx) => {
   const allPostsData = getSortedPostsData()
@@ -34,6 +35,12 @@ export const getServerSideProps = async (ctx) => {
 // }
 
 export default function Home({ allPostsData }) {
+  // Only holds serverRuntimeConfig and publicRuntimeConfig
+  const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+  // Will only be available on the server-side
+  console.log(serverRuntimeConfig.mySecret)
+  // Will be available on both server-side and client-side
+  console.log(publicRuntimeConfig.staticFolder)
   // const [allPostsData, setAllPostsData] = useState([])
   // useEffect(() => {
   //   fetch('/api/posts')
@@ -46,7 +53,7 @@ export default function Home({ allPostsData }) {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>I love coding </p>
+        <p>I love coding {process.env.customKey}</p>
         <p>
           (This is a sample website - you’ll be building a site like this on{' '}
           <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
